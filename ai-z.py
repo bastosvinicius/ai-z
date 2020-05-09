@@ -9,15 +9,8 @@ import curses
 __version__ = '0.1'
 
 
-def DisplayHelp():
-    print("AI-Z usage")
-    print("--help: display this page")
-    print("--version: display version")
-    print("--hwinfo: list hardware info")
-
 def ParseCmdLine(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--h', default=False, action='store_true')
     parser.add_argument('--version', default=False, action='store_true')
     parser.add_argument('--showhwinfo', default=False, action='store_true')
 
@@ -64,11 +57,10 @@ def MainLoop(win):
 def main(argv):
     args = ParseCmdLine(argv[1:])
 
-    if args.h is True:
-        DisplayHelp()
 
     if args.version is True:
-        print("AI-Z version %d" % __version__)
+        print("AI-Z version %s" % __version__)
+        return
 
 
     DetectHardware()

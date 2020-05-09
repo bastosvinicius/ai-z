@@ -23,17 +23,20 @@ def DetectHardware():
 
 
 
-# TODO
+# TODO Add more info
 def PrintHardwareInfo():
-    print('Hardware Info...')
-
+    print('=======================================')
     num_gpus = len(gpuDevices)
     print('NUM_GPUS:' + str(num_gpus))
     for i in range(0,num_gpus):
-        print(gpuDevices[i].name)
-        print(gpuDevices[i].id)
-        print(gpuDevices[i].gpu_usage)
-        
+        print('Name:%s' % gpuDevices[i].name)
+        print('Vram:%5.2f MB' % (float(gpuDevices[i].vram_total) / (1024.0 * 1024.0)))
+
+    print('=======================================')
+    print('CPU:%s' % cpuDevice.name)
+    print('Cores:%d' % cpuDevice.num_cores)
+    print('Threads:%d' % cpuDevice.num_threads)
+    print('Mem:%5f MB' % cpuDevice.memory)
 
 
 def DisplayStats(win):

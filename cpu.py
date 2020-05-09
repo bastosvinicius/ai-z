@@ -15,7 +15,7 @@ class AIZCPU:
                 break
         self.num_threads = psutil.cpu_count()
         self.num_cores = self.num_threads / 2
-        self.memory = int(psutil.virtual_memory().total) / 1024 / 1024
+        self.memory = float(psutil.virtual_memory().total) / 1024.0 / 1024.0
         self.MAX_SAMPLES = 100
         self.cpu_usage = [0] * self.MAX_SAMPLES
         self.mem_usage = [0] * self.MAX_SAMPLES
