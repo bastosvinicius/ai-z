@@ -21,11 +21,11 @@ class AIZGPU_NVIDIA:
         self.gpu_usage.append(int(nv_util.gpu))
         self.gpu_usage = self.gpu_usage[1:len(self.gpu_usage)]
 
-        self.vram_usage.append(nvmlDeviceGetMemoryInfo(self.device).used)
+        self.vram_usage.append(nvmlDeviceGetMemoryInfo(self.device).used / float(self.vram_total) * 100)
         self.vram_usage = self.vram_usage[1:len(self.vram_usage)]
 
         pcie_usage = nvmlDeviceGetPcieThroughput(self.device, NVML_PCIE_UTIL_TX_BYTES) + nvmlDeviceGetPcieThroughput(self.device, NVML_PCIE_UTIL_RX_BYTES)
-        pcie_usage = pcie_usage / 1024.0
+        pcie_usage = pcie_usage / (1024.0)
         #print(pcie_tx_usage)
         self.pcie_bw.append(pcie_usage)
         self.pcie_bw = self.pcie_bw[1:len(self.pcie_bw)]

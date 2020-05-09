@@ -62,6 +62,7 @@ def DisplayStats(win):
         #vram usage
         #vram_size = 8 * 1024 * 1024 * 1024
         win.addch('\n')
+        win.addch('\n')
         win.addstr('VRAM   ')
         y=gpuDevices[i].vram_usage
         line = sparklines(y,num_lines=2, minimum=0, maximum=100)
@@ -73,7 +74,8 @@ def DisplayStats(win):
         
         #pcie bandwidth
         win.addch('\n')
-        win.addstr('PCIE')
+        win.addch('\n')
+        win.addstr('PCIE    ')
         y=gpuDevices[i].pcie_bw
         line = sparklines(y,num_lines=2, minimum=0, maximum=100)
         win.addstr(line[0])

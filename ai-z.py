@@ -45,7 +45,7 @@ def MainLoop(win):
     win.nodelay(True)
 
     while(True):
-        #sleep(0.10)
+        sleep(0.01)
         win.clear()
      
         DisplayStats(win)
