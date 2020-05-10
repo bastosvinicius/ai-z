@@ -3,9 +3,9 @@ import re
 import numpy as np
 from math import sin, pi
 import sys
-from gpu_amd import ListAMDGPUDevices
-from gpu_nvidia import ListNVIDIAGPUDevices
-from cpu import GetCPUDevice
+from aiz.gpu_amd import ListAMDGPUDevices
+from aiz.gpu_nvidia import ListNVIDIAGPUDevices
+from aiz.cpu import GetCPUDevice
 from sparklines import sparklines
 
 

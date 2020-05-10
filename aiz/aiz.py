@@ -2,11 +2,11 @@
 
 import argparse
 import sys
-from hwinfo import DetectHardware, PrintHardwareInfo, gpuDevices, DisplayStats
+from aiz.hwinfo import DetectHardware, PrintHardwareInfo, gpuDevices, DisplayStats
 from time import sleep
 import curses
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 
 def ParseCmdLine(argv):
@@ -54,8 +54,8 @@ def MainLoop(win):
         win.refresh()
 
 
-def main(argv):
-    args = ParseCmdLine(argv[1:])
+def main():
+    args = ParseCmdLine(sys.argv[1:])
 
 
     if args.version is True:

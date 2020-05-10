@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ai-z",
-    version="0.2",
+    version="0.3",
     license='MIT',
     author="Mathieu Poliquin",
     author_email="mathieu.poliquin@gmail.com",
@@ -13,8 +13,9 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://www.ai-z.org",
-    install_requires=['py3nvml','numpy','psutil','py-cpuinfo','sparklines']
+    install_requires=['py3nvml','numpy','psutil','py-cpuinfo','sparklines'],
     packages=setuptools.find_packages(),
+    scripts=['bin/ai-z'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
