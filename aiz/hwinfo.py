@@ -39,6 +39,16 @@ def PrintHardwareInfo():
     print('Mem:%5f MB' % cpuDevice.memory)
 
 
+def DrawGraph(title, y_data):
+    win.addch('\n')
+    win.addstr(title)
+    y=gpuDevices[i].gpu_usage
+    line = sparklines(y,num_lines=2, minimum=0, maximum=100)
+    win.addstr(line[0])
+    win.addch('\n')
+    win.addstr('%3d %%  ' % gpuDevices[i].gpu_usage[index])
+    win.addstr(line[1])
+
 def DisplayStats(win):
 
     #COLOR_CYAN

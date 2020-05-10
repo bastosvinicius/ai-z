@@ -6,7 +6,7 @@ from hwinfo import DetectHardware, PrintHardwareInfo, gpuDevices, DisplayStats
 from time import sleep
 import curses
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 
 def ParseCmdLine(argv):
