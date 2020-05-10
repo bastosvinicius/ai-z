@@ -8,9 +8,7 @@ cd ai-z
 pip3 install -r requirements.txt
 python3 ai-z.py
 ```
-### Issues
-Please post issues and feature requests at: Github issues page
-Known issues:
+### Known Issues
 
 * AMD GPUs name will be displayed as ‘cardX’
 * PCIE bandwith usage graph on NVDIA cards is not correct
