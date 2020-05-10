@@ -6,8 +6,15 @@
 git clone https://github.com/ai-z/ai-z.git
 cd ai-z/aiz
 pip3 install -r requirements.txt
-python3 ai-z.py
+python3 aiz.py
 ```
+Alternatively Using pip:
+```
+pip3 install ai-z
+ai-z
+```
+
+
 ### Known Issues
 
 * AMD GPUs name will be displayed as ‘cardX’
