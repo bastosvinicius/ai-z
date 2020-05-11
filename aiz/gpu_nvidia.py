@@ -14,6 +14,8 @@ class AIZGPU_NVIDIA:
         self.pcie_gen = nvmlDeviceGetMaxPcieLinkGeneration(self.device)
         self.pcie_width = nvmlDeviceGetMaxPcieLinkWidth(self.device)
         self.perf = 0
+        self.temp = 0
+        self.fan = 0
         self.Sample()
 
     def Sample(self):
@@ -29,6 +31,9 @@ class AIZGPU_NVIDIA:
         #print(pcie_tx_usage)
         self.pcie_bw.append(pcie_usage)
         self.pcie_bw = self.pcie_bw[1:len(self.pcie_bw)]
+
+        self.temp = nvmlDeviceGetTemperature(self.device, NVML_TEMPERATURE_GPU)
+        self.fan = nvmlDeviceGetFanSpeed(self.device)
 
 
 

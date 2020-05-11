@@ -318,10 +318,11 @@ class AIZGPU_AMD:
         fanLevel = getSysfsValue(self.device, 'fan')
         self.fanMax = getSysfsValue(self.device, 'fanmax')
         if fanLevel and self.fanMax:
-            self.fan = (int(fanLevel), round((float(fanLevel) / float(self.fanMax)) * 100, 2))
+            self.fan = (float(fanLevel) / float(self.fanMax)) * 100
+            #self.fan = fanLevel
 
         # Temperature
-        #self.temp = getSysfsValue(self.device, 'temp0')
+        self.temp = getSysfsValue(self.device, 'temp1')
 
 
 def ListAMDGPUDevices(showall):

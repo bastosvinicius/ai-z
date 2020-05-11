@@ -6,7 +6,7 @@ from aiz.hwinfo import DetectHardware, PrintHardwareInfo, gpuDevices, DisplaySta
 from time import sleep
 import curses
 
-__version__ = '0.3'
+__version__ = '0.3.1'
 
 
 def ParseCmdLine(argv):
@@ -33,7 +33,13 @@ def Shutdown(win):
     sys.exit(0)
 
 def MainLoop(win):
+    if not curses.has_colors():
+        print('Error: Terminal does not support color')
+        Shutdown(win)
+
     curses.start_color()
+    #COLOR_CYAN
+    curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
     curses.noecho()
     win.nodelay(True)
 
@@ -41,7 +47,7 @@ def MainLoop(win):
         sleep(0.01)
         win.clear()
      
-        DisplayStats(win)
+        DisplayStats(win, curses)
 
         DisplayMenu(win)
 
@@ -74,7 +80,8 @@ def main(argv):
     try:
         win = InitDisplay()
         MainLoop(win)
-    except:
+    except Exception as e:
+        print(e)
         Shutdown(win)
 
 def run_main():

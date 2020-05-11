@@ -31,6 +31,7 @@ def PrintHardwareInfo():
     for i in range(0,num_gpus):
         print('Name:%s' % gpuDevices[i].name)
         print('Vram:%5.2f MB' % (float(gpuDevices[i].vram_total) / (1024.0 * 1024.0)))
+        print('Fan Usage:%f %%' % gpuDevices[i].fan)
 
     print('=======================================')
     print('CPU:%s' % cpuDevice.name)
@@ -49,17 +50,17 @@ def DrawGraph(title, y_data):
     win.addstr('%3d %%  ' % gpuDevices[i].gpu_usage[index])
     win.addstr(line[1])
 
-def DisplayStats(win):
+def DisplayStats(win, curses):
 
-    #COLOR_CYAN
+
 
     # Draw GPU Info
     for i in range(0, len(gpuDevices)):
         index = gpuDevices[i].MAX_SAMPLES-1
-
-        win.addstr(gpuDevices[i].name)
-      
         gpuDevices[i].Sample()
+
+        
+        win.addstr('%s  TEMP:%3.0f C FAN: %2.0f %%' % (gpuDevices[i].name, gpuDevices[i].temp, gpuDevices[i].fan))
         
         
         #gpu usage
@@ -67,10 +68,10 @@ def DisplayStats(win):
         win.addstr('USAGE  ')
         y=gpuDevices[i].gpu_usage
         line = sparklines(y,num_lines=2, minimum=0, maximum=100)
-        win.addstr(line[0])
+        win.addstr(line[0], curses.color_pair(1))
         win.addch('\n')
         win.addstr('%3d %%  ' % gpuDevices[i].gpu_usage[index])
-        win.addstr(line[1])
+        win.addstr(line[1], curses.color_pair(1))
 
         #vram usage
         #vram_size = 8 * 1024 * 1024 * 1024
@@ -79,10 +80,10 @@ def DisplayStats(win):
         win.addstr('VRAM   ')
         y=gpuDevices[i].vram_usage
         line = sparklines(y,num_lines=2, minimum=0, maximum=100)
-        win.addstr(line[0])
+        win.addstr(line[0], curses.color_pair(1))
         win.addch('\n')
         win.addstr('%3d %%  ' % gpuDevices[i].vram_usage[index])
-        win.addstr(line[1])
+        win.addstr(line[1], curses.color_pair(1))
  
         
         #pcie bandwidth
@@ -91,10 +92,12 @@ def DisplayStats(win):
         win.addstr('PCIE    ')
         y=gpuDevices[i].pcie_bw
         line = sparklines(y,num_lines=2, minimum=0, maximum=100)
-        win.addstr(line[0])
+        win.addstr(line[0], curses.color_pair(1))
         win.addch('\n')
         win.addstr('%3d MB/s' % gpuDevices[i].pcie_bw[index])
-        win.addstr(line[1])
+        win.addstr(line[1], curses.color_pair(1))
+
+        win.addch('\n')
         
     #Draw CPU stats
     win.addch('\n')
@@ -109,10 +112,10 @@ def DisplayStats(win):
     win.addstr('USAGE  ')
     y=cpuDevice.cpu_usage
     line = sparklines(y,num_lines=2, minimum=0, maximum=100)
-    win.addstr(line[0])
+    win.addstr(line[0], curses.color_pair(1))
     win.addch('\n')
     win.addstr('%3d %%  ' % cpuDevice.cpu_usage[index])
-    win.addstr(line[1])
+    win.addstr(line[1], curses.color_pair(1))
     
 
     

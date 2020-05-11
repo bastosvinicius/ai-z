@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ai-z",
-    version="0.3",
+    version="0.3.1",
     license='MIT',
     author="Mathieu Poliquin",
     author_email="mathieu.poliquin@gmail.com",
