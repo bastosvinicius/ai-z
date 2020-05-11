@@ -1,2 +1,5 @@
 *.pyc
 __pychache__/*
+dist/*
+build/*
+ai_z.egg-info/*
