@@ -4,9 +4,9 @@
 ### Install and usage
 ```
 git clone https://github.com/ai-z/ai-z.git
-cd ai-z/aiz
+cd ai-z
 pip3 install -r requirements.txt
-python3 aiz.py
+python3 -m aiz.aiz
 ```
 Alternatively Using pip:
 ```
