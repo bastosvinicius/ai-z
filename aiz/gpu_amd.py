@@ -104,6 +104,30 @@ for block in validFwBlocks:
 #SMC has different formatting for its version
 valuePaths['smc_fw_version']['needsparse'] = True
 
+def listAmdHwMons():
+    """Return a list of AMD HW Monitors."""
+    hwmons = []
+
+    for mon in os.listdir(hwmonprefix):
+        tempname = os.path.join(hwmonprefix, mon, 'name')
+        if os.path.isfile(tempname):
+            with open(tempname, 'r') as tempmon:
+                drivername = tempmon.read().rstrip('\n')
+                if drivername in ['radeon', 'amdgpu']:
+                    hwmons.append(os.path.join(hwmonprefix, mon))
+    return hwmons
+
+def getHwmonFromDevice(device):
+    """ Return the corresponding HW Monitor for a specified GPU device.
+
+    Parameters:
+    device -- DRM device identifier
+    """
+    drmdev = os.path.realpath(os.path.join(drmprefix, device, 'device'))
+    for hwmon in listAmdHwMons():
+        if os.path.realpath(os.path.join(hwmon, 'device')) == drmdev:
+            return hwmon
+    return None
 
 def getFilePath(device, key):
     """ Return the filepath for a specific device and key
@@ -113,7 +137,7 @@ def getFilePath(device, key):
     key -- [$valuePaths.keys()] The sysfs path to return
     """
     if key not in valuePaths.keys():
-        printLogNoDev('Cannot get file path for key %s' % key)
+        print('Cannot get file path for key %s' % key)
         logging.debug('Key %s not present in valuePaths map' % key)
         return None
     pathDict = valuePaths[key]
@@ -254,6 +278,9 @@ class AIZGPU_AMD:
         self.vram_total = 0
         self.pcie_bw = [0] * self.MAX_SAMPLES
         self.perf = 0
+        self.fan = 0
+        self.fanmax = 0
+        self.temp = 0
         self.Sample()
 
     def GetName(self):
@@ -261,6 +288,8 @@ class AIZGPU_AMD:
 
     def Sample(self):
         self.perf = getSysfsValue(self.device, 'perf')
+        self.fan = getSysfsValue(self.device, 'fan')
+        self.temp = getSysfsValue(self.device, 'fan')
 
         # GPU usage
         self.gpu_usage.append(int(getSysfsValue(self.device, 'use')))
@@ -280,13 +309,19 @@ class AIZGPU_AMD:
         received = int(fsvals.split()[0])
         sent = int(fsvals.split()[1])
         mps = int(fsvals.split()[2])
-
         # Use 1024.0 to ensure that the result is a float and not integer division
         bw = ((received + sent) * mps) / 1024.0 / 1024.0
-
         self.pcie_bw.append(float(bw))
         self.pcie_bw = self.pcie_bw[1:len(self.pcie_bw)]
 
+        # Fan speed %
+        fanLevel = getSysfsValue(self.device, 'fan')
+        self.fanMax = getSysfsValue(self.device, 'fanmax')
+        if fanLevel and self.fanMax:
+            self.fan = (int(fanLevel), round((float(fanLevel) / float(self.fanMax)) * 100, 2))
+
+        # Temperature
+        #self.temp = getSysfsValue(self.device, 'temp0')
 
 
 def ListAMDGPUDevices(showall):

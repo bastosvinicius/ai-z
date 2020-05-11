@@ -54,8 +54,8 @@ def MainLoop(win):
         win.refresh()
 
 
-def main():
-    args = ParseCmdLine(sys.argv[1:])
+def main(argv):
+    args = ParseCmdLine(argv[1:])
 
 
     if args.version is True:
@@ -77,6 +77,8 @@ def main():
     except:
         Shutdown(win)
 
+def run_main():
+    main(sys.argv[1:])
 
 if __name__ == '__main__':
     main(sys.argv)
