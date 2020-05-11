@@ -33,7 +33,10 @@ class AIZGPU_NVIDIA:
         self.pcie_bw = self.pcie_bw[1:len(self.pcie_bw)]
 
         self.temp = nvmlDeviceGetTemperature(self.device, NVML_TEMPERATURE_GPU)
-        self.fan = nvmlDeviceGetFanSpeed(self.device)
+        try:
+            self.fan = nvmlDeviceGetFanSpeed(self.device)
+        except:
+            self.fan = 0
 
 
 
